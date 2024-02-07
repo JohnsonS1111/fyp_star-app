@@ -6,10 +6,10 @@ import { faPenRuler } from "@fortawesome/free-solid-svg-icons";
 const Dashboard = () => {
   return (
     <div>
-      <h1>
+      <h2>
         <FontAwesomeIcon icon={faPenRuler} className="icon2" />
         Upcoming Tasks
-      </h1>{" "}
+      </h2>{" "}
       <TodoCard />
     </div>
   );
