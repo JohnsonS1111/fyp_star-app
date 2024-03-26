@@ -60,11 +60,11 @@ const TodoForm = () => {
 
         <label>Details</label>
         <textarea
-          id="details"
-          name="details"
+          id="description"
+          name="description"
           onChange={handleChange}
           required={true}
-          value={formData.details}
+          value={formData.description}
           rows="5"
         />
 
