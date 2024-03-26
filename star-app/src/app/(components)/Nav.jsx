@@ -1,7 +1,7 @@
 import {
-  faCalendarAlt,
   faHouseChimney,
   faListCheck,
+  faPlusSquare,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,20 +10,20 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <nav className="flex flex-col bg-todo-hover outline-black-5px rounded-md shadow-lg p-3 m-2">
-      <div className="flex items-center space-x-8">
+    <nav className="flex justify-between bg-nav p-4">
+      <div className="flex items-center space-x-4">
         <Link href="/">
           <FontAwesomeIcon icon={faHouseChimney} className="icon" />
         </Link>
-        <Link href="/TodosPage">
-          <FontAwesomeIcon icon={faListCheck} className="icon" />
+        <Link href="/TodosPage/new">
+          <FontAwesomeIcon icon={faPlusSquare} className="icon" />
         </Link>
         <Link href="/Profile">
           <FontAwesomeIcon icon={faUser} className="icon" />
         </Link>
-        <Link href="/Calendar">
-          <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
-        </Link>
+      </div>
+      <div>
+        <p className="text-default-text">js@gmail.com</p>
       </div>
     </nav>
   );
