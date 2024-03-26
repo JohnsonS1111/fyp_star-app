@@ -16,10 +16,12 @@ module.exports = {
         nav: "#ffffff",
         page: "#C7C6DE",
         todo: "#bed5f0",
-        "todo-hover": "#baa3f7",
+        "todo-hover": "#9b83de",
         "default-text": "#000000",
         "button-color": "#0084d4",
         "button-hover": "#009fff",
+        "purp-accent": "9a6ca8",
+        "purp-accent-hover": "#d4abe0"
       },
     },
   },
