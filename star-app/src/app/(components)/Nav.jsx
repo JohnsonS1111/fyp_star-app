@@ -25,6 +25,9 @@ const Nav = () => {
           <FontAwesomeIcon icon={faCalendarAlt} className="icon" />
         </Link>
       </div>
+      <div>
+        <p className="text-default-text">jshog@gmail.com</p>
+      </div>
     </nav>
   );
 };
