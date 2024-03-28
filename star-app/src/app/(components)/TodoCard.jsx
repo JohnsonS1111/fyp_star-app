@@ -6,11 +6,11 @@ import Status from "./Status";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenRuler } from "@fortawesome/free-solid-svg-icons";
 
-const TodoCard = () => {
+const TodoCard = ({todo}) => {
   return (
     <div className="flex flex-col bg-todo hover:bg-todo-hover outline-black-5px rounded-md shadow-lg p-3 m-2">      
     <div className="flex mb-3">
-        <TodoPriority />
+        <TodoPriority priority={ todo.priority } />
         <div className="ml-auto">
           <DeleteBlock />
         </div>
