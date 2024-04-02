@@ -6,26 +6,38 @@ import Status from "./Status";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenRuler } from "@fortawesome/free-solid-svg-icons";
 
-const TodoCard = ({todo}) => {
+const TodoCard = ({ todo }) => {
+
+  const formatTime = (timestamp) => {
+    const options = {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    };
+
+    const date = new Date(timestamp);
+    const formattedDate = date.toLocaleString("en-ie", options);
+    return formattedDate;
+  }
   return (
-    <div className="flex flex-col bg-todo hover:bg-todo-hover outline-black-5px rounded-md shadow-lg p-3 m-2">      
-    <div className="flex mb-3">
-        <TodoPriority priority={ todo.priority } />
+    <div className="flex flex-col bg-todo hover:bg-todo-hover outline-black-5px rounded-md shadow-lg p-3 m-2">
+      <div className="flex mb-3">
+        <TodoPriority priority={todo.priority} />
         <div className="ml-auto">
           <DeleteBlock />
         </div>
       </div>
-      <h3>Task title</h3>
-      <hr className="h-px border-0 bg-page mb-2" />
-      <p className="whitespace-pre-wrap"> Please enter task details</p>
+      <h3>{todo.title}</h3>
       <div className="flex flex-col">
-        <p className="text-xs my-1">08/31/23 10.43pm</p>
-        <TodoProgress />
+        <p className="text-xs my-1">{formatTime(todo.createdAt)}</p>
+        <TodoProgress progess={todo.progess} />
       </div>
       <div className="ml-auto flex items-end">
-        <Status />
+        <Status status={todo.status} />
       </div>
-      
     </div>
   );
 };
