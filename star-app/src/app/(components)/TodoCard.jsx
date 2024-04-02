@@ -33,7 +33,7 @@ const TodoCard = ({ todo }) => {
       <h3>{todo.title}</h3>
       <div className="flex flex-col">
         <p className="text-xs my-1">{formatTime(todo.createdAt)}</p>
-        <TodoProgress progess={todo.progess} />
+        <TodoProgress progress={todo.progress} />
       </div>
       <div className="ml-auto flex items-end">
         <Status status={todo.status} />
