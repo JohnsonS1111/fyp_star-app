@@ -21,7 +21,7 @@ const Status = ({ status }) => {
   };
   return (
     <span
-      className={`inline-block rounded-full px-2 py-1 text-xs font-bold text-black-500 bg-green-600`}
+      className={`inline-block rounded-full px-2 py-1 text-xs font-bold text-black-500 ${getColor(status)}`}
     >
       {status}
     </span>
