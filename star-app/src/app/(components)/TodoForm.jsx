@@ -3,7 +3,8 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const TodoForm = () => {
+const TodoForm = ({ todo }) => {
+  const EDITMODE = todo._id == "new" ? false : true;
   const router = useRouter();
   const handleChange = (e) => {
     const value = e.target.value;
@@ -17,15 +18,28 @@ const TodoForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/Todos", {
-      method: "POST",
-      body: JSON.stringify({ formData }),
-      "content-type": "application/json",
-    });
+    if (EDITMODE) {
+      const res = await fetch(`/api/Todos/${todo._id}`, {
+        method: "PUT",
+        body: JSON.stringify({ formData }),
+        "content-type": "application/json",
+      });
 
-    if (!res.ok) {
-      throw new Error("Unable to create task.");
+      if (!res.ok) {
+        throw new Error("failed to update task.");
+      }
+    } else {
+      const res = await fetch("/api/Todos", {
+        method: "POST",
+        body: JSON.stringify({ formData }),
+        "content-type": "application/json",
+      });
+
+      if (!res.ok) {
+        throw new Error("Unable to create task.");
+      }
     }
+
     router.refresh();
     router.push("/");
   };
@@ -39,6 +53,15 @@ const TodoForm = () => {
     category: "Project",
   };
 
+  if (EDITMODE) {
+    startingTodoData["title"] = todo.title;
+    startingTodoData["description"] = todo.description;
+    startingTodoData["priority"] = todo.priority;
+    startingTodoData["progress"] = todo.progress;
+    startingTodoData["status"] = todo.status;
+    startingTodoData["category"] = todo.category;
+  }
+
   const [formData, setFormData] = useState(startingTodoData);
   return (
     <div className="flex justify-center">
@@ -47,7 +70,7 @@ const TodoForm = () => {
         method="post"
         onSubmit={handleSubmit}
       >
-        <h3>Create Task</h3>
+        <h3>{EDITMODE ? "Update Task" : "Create Task"}</h3>
         <label>Title</label>
         <input
           id="title"
@@ -151,7 +174,11 @@ const TodoForm = () => {
           <option value="done">Done</option>
           <option value="stuck">Stuck</option>
         </select>
-        <input type="submit" className="btn" value="Create Task" />
+        <input
+          type="submit"
+          className="btn"
+          value={EDITMODE ? "Update Task" : "Create Task"}
+        />
       </form>
     </div>
   );
