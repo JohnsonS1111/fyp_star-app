@@ -12,15 +12,16 @@ const Nav = () => {
   return (
     <nav className="flex justify-between bg-nav p-4">
       <div className="flex items-center space-x-4">
-        <Link href="/">
+        <Link href="/" title="Home">
           <FontAwesomeIcon icon={faHouseChimney} className="icon" />
         </Link>
-        <Link href="/TodosPage/new">
+        <Link href="/TodosPage/new" title="Create new task">
           <FontAwesomeIcon icon={faPlusSquare} className="icon" />
         </Link>
-        <Link href="/Profile">
+        <Link href="/Profile" title="Profile">
           <FontAwesomeIcon icon={faUser} className="icon" />
         </Link>
+       
       </div>
       <div>
         <p className="text-default-text">js@gmail.com</p>

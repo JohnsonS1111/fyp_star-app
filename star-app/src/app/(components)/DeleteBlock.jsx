@@ -21,6 +21,7 @@ const DeleteBlock = ({ id }) => {
       icon={faTrash}
       className="text-grey-500 hover:text-red-500"
       onClick={deleteTask}
+      title="Delete task"
     />
   );
 };

@@ -1,4 +1,4 @@
-import Todo from "../../(models)/Todo";
+import Todo from "/(models)/Todo";
 import { NextResponse } from "next/server";
 
 export async function POST(req) {
