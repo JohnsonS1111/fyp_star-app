@@ -1,5 +1,5 @@
-import Todo from "@/app/(models)/Todo";
 import { NextResponse } from "next/server";
+import Todo from "../../../../../(models)/Todo";
 
 export async function GET(req, { params }) {
   try {

@@ -28,7 +28,7 @@ const TodoCard = ({ todo }) => {
         <TodoPriority priority={todo.priority} />
         <div className="ml-auto space-x-3">
           <DeleteBlock id={todo._id} />
-          <Link href={`/TodosPage/${todo._id}`} style={{ display: "contents" }}>
+          <Link href={`/TodosPage/${todo._id}`} style={{ display: "contents" }} title="Edit Task details">
             <FontAwesomeIcon
               icon={faPenToSquare}
               className="text-grey-500 hover:text-yellow-300"
