@@ -21,11 +21,8 @@ const Nav = () => {
         <Link href="/Profile" title="Profile">
           <FontAwesomeIcon icon={faUser} className="icon" />
         </Link>
-       
       </div>
-      <div>
-        <p className="text-default-text">js@gmail.com</p>
-      </div>
+      <div></div>
     </nav>
   );
 };

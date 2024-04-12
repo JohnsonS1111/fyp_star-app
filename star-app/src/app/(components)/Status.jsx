@@ -16,12 +16,16 @@ const Status = ({ status }) => {
       case "stuck":
         color = "bg-orange-300";
         return color;
+      case "almost done":
+        color = "bg-teal-300";
     }
     return color;
   };
   return (
     <span
-      className={`inline-block rounded-full px-2 py-1 text-xs font-bold text-black-500 ${getColor(status)}`}
+      className={`inline-block rounded-full px-2 py-1 text-xs font-bold text-black-500 ${getColor(
+        status
+      )}`}
     >
       {status}
     </span>

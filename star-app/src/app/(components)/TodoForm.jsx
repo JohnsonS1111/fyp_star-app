@@ -172,6 +172,7 @@ const TodoForm = ({ todo }) => {
           <option value="not started">Not Started</option>
           <option value="started">Started</option>
           <option value="done">Done</option>
+          <option value="almost finished">Almost Fisnished</option>
           <option value="stuck">Stuck</option>
         </select>
         <input
