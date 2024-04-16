@@ -2,6 +2,7 @@ import {
   faHouseChimney,
   faListCheck,
   faPlusSquare,
+  faUpload,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,6 +21,9 @@ const Nav = () => {
         </Link>
         <Link href="/Profile" title="Profile">
           <FontAwesomeIcon icon={faUser} className="icon" />
+        </Link>
+        <Link href="/Timetable" title="Timetable upload">
+          <FontAwesomeIcon icon={faUpload} className="icon"/>
         </Link>
       </div>
       <div></div>
