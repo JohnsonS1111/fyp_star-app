@@ -1,18 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
-mongoose.connect(process.env.MONGODB_URI);
 
 const userSchema = new Schema(
   {
     username: {
       type: String,
       required: [true, "Please provide a username"],
-      unique: true,
     },
     email: {
       type: String,
       required: [true, "Please provide an email"],
-      unique: true,
     },
     password: {
       type: String,
