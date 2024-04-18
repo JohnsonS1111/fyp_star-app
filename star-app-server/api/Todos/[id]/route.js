@@ -1,5 +1,8 @@
 import Todo from "@/models/Todo";
 import { NextResponse } from "next/server";
+import {connectToMongoDB} from "@/dbConfig/dbConfig"
+
+connectToMongoDB();
 
 
 export async function GET(req, { params }) {
