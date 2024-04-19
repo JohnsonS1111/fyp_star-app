@@ -1,6 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose")
 
-const todoSchema = new Schema(
+const todoSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -28,4 +28,4 @@ const todoSchema = new Schema(
 );
 
 const Todo = mongoose.models.Todo || mongoose.model("Todo", todoSchema);
-export default Todo;
+module.exports = Todo;
