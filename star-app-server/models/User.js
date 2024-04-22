@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
-
-
+const connectToMongoDB = require("../dbConfig/dbConfig")
+connectToMongoDB()
+const {model, Schema } = require ("mongoose")
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -28,5 +29,5 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-const User = mongoose.models.Users || mongoose.model("User", userSchema);
+const User = mongoose.models.Users || mongoose.model("user", userSchema);
 module.exports = User;

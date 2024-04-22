@@ -1,26 +1,48 @@
-import Todo from "@/models/Todo";
 import { NextResponse } from "next/server";
-import {connectToMongoDB} from "@/dbConfig/dbConfig"
-
-connectToMongoDB();
 
 export async function POST(req) {
-  console.log("POST RAN");
   try {
-    const body = await req.json();
-    const todoData = body.formData;
-    await Todo.create(todoData);
+    console.log("POST RAN");
+    const reqbody = await req.json();
+    const todoData = reqbody.formData;
 
-    return NextResponse.json({ message: "Task Created" }, { status: 201 });
+    const res = await fetch("http://localhost:5000/todos", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqbody),
+    });
+    if (!res.ok) {
+      return NextResponse.json({
+        message: "task could not be created",
+        status: 400,
+      });
+    }
+
+    return NextResponse.json({
+      message: "task successfully created",
+      status: 201,
+    });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const todos = await Todo.find();
-    return NextResponse.json({ todos }, { status: 200 });
+    const reqbody = await req.body;
+    const res = await fetch("http://localhost:5000/todos/displayTodos", {
+      method: "GET",
+      body: JSON.stringify(reqbody),
+    });
+    if (!res.ok) {
+      return NextResponse.json({
+        message: "unable to find tasks",
+        status: 400,
+      });
+    }
+    return NextResponse.json({ reqbody });
   } catch (error) {
     return NextResponse.json({ message: "Error", error }, { status: 500 });
   }

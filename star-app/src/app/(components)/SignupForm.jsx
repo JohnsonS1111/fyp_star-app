@@ -6,37 +6,49 @@ import React, { useEffect, useState } from "react";
 
 const SignupForm = () => {
   const router = useRouter();
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: "",
-  });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const onSignup = async (e) => {
+  const handleSubmit = async (e) => {
+    console.log(username);
+    console.log(email);
+    console.log(password);
+
     e.preventDefault(); // Prevent default form submission
     try {
       setLoading(true);
-      const res = await fetch("api/users/signup", {
-        // Changed protocol to http
+      const resT = await fetch("http://localhost:5000/signup/checkUser", {
         method: "POST",
-        body: JSON.stringify({ user }), // Removed {}
+        body: JSON.stringify({ email }),
         headers: {
-          "Content-Type": "application/json", // Corrected header key
+          "Content-Type": "application/json",
         },
       });
+      if (!resT.ok) {
+        throw new Error("Error signing up");
+      }
+
+      const res = await fetch("http://localhost:5000/signup/", {
+        method: "POST",
+        body: JSON.stringify({ username, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
       if (!res.ok) {
         throw new Error("Error signing up");
-      } else {
-        console.log("Everything ok here");
       }
       // Clear form fields after successful signup
-      setUser({
-        username: "",
-        email: "",
-        password: "",
-      });
+
+      setEmail("");
+      setUsername("");
+      setPassword("");
+
       router.refresh();
       router.push("/login"); // Use replace instead of push to prevent stacking routes
     } catch (error) {
@@ -47,12 +59,12 @@ const SignupForm = () => {
   };
 
   useEffect(() => {
-    setButtonDisabled(!(user.email && user.password && user.username)); // Simplified condition
-  }, [user]);
+    setButtonDisabled(!(username && email && password)); // Simplified condition
+  }, [username, email, password]);
 
   return (
     <div className="flex justify-center">
-      <form className="flex flex-col gap-3 w-1/2" onSubmit={onSignup}>
+      <form className="flex flex-col gap-3 w-1/2" onSubmit={handleSubmit}>
         <h3 className="text-center pb-3 ">
           {loading ? "Processing" : "Signup"}
         </h3>
@@ -61,10 +73,7 @@ const SignupForm = () => {
           className="p-2 text-slate-800"
           id="username"
           type="text"
-          value={user.username}
-          onChange={(e) =>
-            setUser((prevUser) => ({ ...prevUser, username: e.target.value }))
-          }
+          onChange={(e) => setUsername(e.target.value)}
           placeholder="your-username"
         />
 
@@ -73,10 +82,7 @@ const SignupForm = () => {
           className="p-2 text-slate-800"
           id="email"
           type="text"
-          value={user.email}
-          onChange={(e) =>
-            setUser((prevUser) => ({ ...prevUser, email: e.target.value }))
-          }
+          onChange={(e) => setEmail(e.target.value)}
           placeholder="your-email"
         />
 
@@ -85,10 +91,7 @@ const SignupForm = () => {
           className="p-2 text-slate-800"
           id="password"
           type="password"
-          value={user.password}
-          onChange={(e) =>
-            setUser((prevUser) => ({ ...prevUser, password: e.target.value }))
-          }
+          onChange={(e) => setPassword(e.target.value)}
           placeholder="password"
         />
 

@@ -3,28 +3,29 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const connectToMongoDB = require("../dbConfig/dbConfig");
+const connectToMongoDB = require("../dbConfig/dbConfig.js");
 
-connectToMongoDB()
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res) => {
   try {
-    console.log("POST RAN");
-   
-    const { username, email, hashedPassword } = await req.body;
+    console.log("POST 2 RTAN");
+    const reqBody = await req.body;
+    await connectToMongoDB();
+    const { username, email, password } = reqBody;
 
-    console.log(reqBody);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = new User({
+    const newUser = await User.create({
       username,
       email,
-      hashedPassword,
+      password: hashedPassword,
     });
 
-    const savedUser = await newUser.save();
-    console.log(savedUser);
+   if(!newUser){
+    console.log("no new user created")
+   }
     return res
       .status(201)
-      .json({ message: "User successfully created", success: true, savedUser });
+      .json({ message: "User successfully created", success: true, newUser });
   } catch (error) {
     return res.status(500).json({ message: "Error signing up: ", error });
   }
@@ -32,13 +33,15 @@ router.post("/", async (req, res, next) => {
 
 router.post("/checkUser", async (req, res) => {
   try {
-   
+    console.log("POST RAN ***");
     const { email } = req.body;
     const foundUser = await User.findOne({ email });
     if (foundUser) {
-      return res.status(200).json({ message: "User already exists" });
+      console.log("if found user");
+      return res.status(400).json({ message: "User already exists" });
     } else {
-      return res.status(400).json({ message: "User does not exist" });
+      console.log("if not found user");
+      return res.status(200).json({ message: "User does not exist" });
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });

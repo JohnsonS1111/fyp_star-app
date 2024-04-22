@@ -3,10 +3,9 @@ import TodoCard from "./(components)/TodoCard";
 
 const getTodos = async () => {
   try {
-    const res = await fetch("http:/localhost:5000/todos", {
+    const res = await fetch("http://localhost:5000/todos/displayTodos", {
       cache: "no-store",
       method: "GET",
-      mode: "no-cors",
     });
 
     return res.json();

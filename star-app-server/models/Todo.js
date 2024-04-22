@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
-
+const connectToMongoDB = require("../dbConfig/dbConfig")
+connectToMongoDB()
 const todoSchema = new mongoose.Schema(
   {
     title: {

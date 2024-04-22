@@ -4,9 +4,10 @@ import { Jwt } from "jsonwebtoken"; // Import corrected
 
 export async function POST(req) {
   try {
-    console.log("POST RAN");
-    const reqBody = await req.body;
-    const { username, email, password } = reqBody;
+
+    const { username, email, password } = await req.json();
+
+    console.log("********************");
 
     // check if user exists
     const userCheckResponse = await fetch(
@@ -20,27 +21,44 @@ export async function POST(req) {
       }
     ); // Await the result
 
-    const userCheck = await userCheckResponse.json();
+    const userCheck = userCheckResponse.json(); //await
     if (userCheck.error) {
       return NextResponse.json(
         { error: "User already exists" },
-        { status: 400 }
+        { status: 400 },
+        console.log("failed"),
       );
     }
 
+    console.log("passed");
     // hash password
-    const hashedPassword = await bcryptjs.hash(password, 10);
+    const hashedPassword = bcryptjs.hash(password, 10);
+
+    console.log("pass works");
+
+  
+
+    console.log(email);
+    console.log(username);
 
     // Create user
-    const res = await fetch("http://localhost:5000/signup", {
+    const res = await fetch("http://localhost:5000/signup/", {
       method: "POST",
-      body: JSON.stringify(reqBody),
+      body: JSON.stringify({ username, email, password }),
       headers: {
         "Content-Type": "application/json",
       },
     });
+    
+    const userCreated = await res.json();
 
-    if(res.ok){
+    console.log("Name: ", username )
+    console.log("~~~~~~~~~~~~~~~" )
+    console.log( userCreated)
+
+    
+
+    if(userCreated.errors = 0){
       return NextResponse.json(
       { message: "User created successfully" },
       { status: 201 }
