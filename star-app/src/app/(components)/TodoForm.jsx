@@ -1,75 +1,60 @@
-"use client";
+"use client"
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const TodoForm = ({ todo }) => {
-  const EDITMODE = todo._id == "new" ? false : true;
+  const EDITMODE = todo._id === "new" ? false : true;
   const router = useRouter();
-  const handleChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
 
+  // Initialize form data state
+  const [formData, setFormData] = useState({
+    title: todo.title || "", // Set title to empty string if undefined
+    description: todo.description || "", // Set description to empty string if undefined
+    priority: todo.priority || 1, // Set priority to 1 if undefined
+    progress: todo.progress || 0, // Set progress to 0 if undefined
+    status: todo.status || "not started", // Set status to "not started" if undefined
+    category: todo.category || "Project", // Set category to "Project" if undefined
+  });
+
+  // Handle form field changes
+  const handleChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (EDITMODE) {
-      const res = await fetch(`/api/Todos/${todo._id}`, {
-        method: "PUT",
-        body: JSON.stringify({ formData }),
-        "content-type": "application/json",
+    try {
+      const url = EDITMODE ? `http://localhost:5000/todos/${todo._id}` : "http://localhost:5000/todos/";
+      const method = EDITMODE ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method: method,
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
       if (!res.ok) {
-        throw new Error("failed to update task.");
+        throw new Error(EDITMODE ? "Failed to update task." : "Failed to create task.");
       }
-    } else {
-      const res = await fetch("/api/Todos", {
-        method: "POST",
-        body: JSON.stringify({ formData }),
-        "content-type": "application/json",
-      });
 
-      if (!res.ok) {
-        throw new Error("Unable to create task.");
-      }
+      router.push("/"); // Navigate to home page after successful submission
+    } catch (error) {
+      console.error("Error:", error);
+      // Handle error (e.g., display error message to user)
     }
-
-    router.refresh();
-    router.push("/");
   };
 
-  const startingTodoData = {
-    title: "",
-    description: "",
-    priority: 1,
-    progress: 0,
-    status: "not started",
-    category: "Project",
-  };
-
-  if (EDITMODE) {
-    startingTodoData["title"] = todo.title;
-    startingTodoData["description"] = todo.description;
-    startingTodoData["priority"] = todo.priority;
-    startingTodoData["progress"] = todo.progress;
-    startingTodoData["status"] = todo.status;
-    startingTodoData["category"] = todo.category;
-  }
-
-  const [formData, setFormData] = useState(startingTodoData);
   return (
     <div className="flex justify-center">
-      <form
-        className="flex flex-col gap-3 w-1/2"
-        method="post"
-        onSubmit={handleSubmit}
-      >
+      <form className="flex flex-col gap-3 w-1/2" onSubmit={handleSubmit}>
         <h3>{EDITMODE ? "Update Task" : "Create Task"}</h3>
         <label>Title</label>
         <input
@@ -105,55 +90,19 @@ const TodoForm = ({ todo }) => {
 
         <label>Priority</label>
         <div>
-          <input
-            id="priority-1"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={1}
-            checked={formData.priority == 1}
-          />
-          <label>1</label>
-
-          <input
-            id="priority-2"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={2}
-            checked={formData.priority == 2}
-          />
-          <label>2</label>
-
-          <input
-            id="priority-3"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={3}
-            checked={formData.priority == 3}
-          />
-          <label>3</label>
-
-          <input
-            id="priority-4"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={4}
-            checked={formData.priority == 4}
-          />
-          <label>4</label>
-
-          <input
-            id="priority-5"
-            name="priority"
-            type="radio"
-            onChange={handleChange}
-            value={5}
-            checked={formData.priority == 5}
-          />
-          <label>5</label>
+          {[1, 2, 3, 4, 5].map((priority) => (
+            <React.Fragment key={priority}>
+              <input
+                id={`priority-${priority}`}
+                name="priority"
+                type="radio"
+                onChange={handleChange}
+                value={priority}
+                checked={formData.priority === priority}
+              />
+              <label>{priority}</label>
+            </React.Fragment>
+          ))}
         </div>
 
         <label>Progress</label>
@@ -172,7 +121,6 @@ const TodoForm = ({ todo }) => {
           <option value="not started">Not Started</option>
           <option value="started">Started</option>
           <option value="done">Done</option>
-          <option value="almost finished">Almost Fisnished</option>
           <option value="stuck">Stuck</option>
         </select>
         <input

@@ -1,11 +1,9 @@
-import Userform from "../(components)/Userform";
-
+import SignupForm from "../(components)/SignupForm";
 
 const Signup = () => {
-  
   return (
     <div className="flex flex-col">
-      <Userform/>
+      <SignupForm />
     </div>
   );
 };
