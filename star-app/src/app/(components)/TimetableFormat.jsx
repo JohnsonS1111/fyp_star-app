@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -16,8 +17,37 @@ const TimetableFormat = () => {
     };
   };
   return (
-    <div>
-      <input type="file" accept=".xlsx, .xls" onChange={handleFileUpload} />
+    <div className="container mx-auto py-4">
+      <input
+        type="file"
+        accept=".xlsx, .xls"
+        className="border border-gray-300 rounded p-2 mb-4"
+        onChange={handleFileUpload}
+      />
+      {data.length > 0 && (
+        <table className="table-auto">
+          <thead>
+            <tr>
+              {Object.keys(data[0]).map((key) => (
+                <th key={key} className="border border-gray-300 p-2">
+                  {key}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((row, index) => (
+              <tr key={index}>
+                {Object.values(row).map((value, index) => (
+                  <td key={index} className="border border-gray-300 p-2">
+                    {value}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
