@@ -8,34 +8,45 @@ const jwt = require("jsonwebtoken");
 router.post("/", async (req, res) => {
   try {
     await connectToMongoDB();
-    const { email, password } = req.body; // Use req.body instead of req.json()
+    const { email, password } = req.body;
     console.log("LoginPOST RAN");
 
     console.log(email);
     console.log(password);
-    const existingUser = await User.findOne({ email }).select("password");
-    if (!existingUser) {
+    
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
       return res.status(400).json({ message: "User does not exist" });
     }
 
-    const passCheck = await bcrypt.compare(password, existingUser.password);
+    // Check if password is correct
+    const passCheck = await bcrypt.compare(password, user.password);
     if (!passCheck) {
-      return res.status(400).json({ message: "Incorrect Password" }); // Fix typo in message
+      return res.status(400).json({ message: "Incorrect Password" });
     }
 
-    const token = jwt.sign({ id: existingUser._id }, process.env.JWT_SECRET, {
+    // Remove password field from user object
+    user.password = undefined;
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    delete existingUser.password;
 
+    console.log(token);
+
+    // Set JWT token in cookie
     res.cookie("jwt", token, {
-      // Remove extra space in cookie name
       httpOnly: true,
       maxAge: 24 * 60 * 60 * 1000,
     });
-    res.status(200).json({ token, existingUser });
+
+    // Send response with token and user object
+    res.status(200).json({ token, user });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Login failed:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

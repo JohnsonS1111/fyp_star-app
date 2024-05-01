@@ -13,15 +13,12 @@ const Loginform = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    console.log(email);
-    console.log(password);
-
     e.preventDefault(); // Prevent default form submission
     try {
       setLoading(true);
       const res = await fetch("http://localhost:5000/login/", {
         method: "POST",
-        body: JSON.stringify({ email, password}),
+        body: JSON.stringify({ email, password }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -30,13 +27,17 @@ const Loginform = () => {
         throw new Error("Error logging in");
       }
 
-      // Clear form fields after successful signup
+      const data = await res.json();
 
+      console.log("User login successful: ", data);
+      document.cookie = `jwt=${data.token};`;
+
+      // Clear form fields after successful login
       setEmail("");
       setPassword("");
 
-      router.refresh();
-      router.push("/"); 
+      // Redirect user to profile page
+      router.push("/TodosPage/new");
     } catch (error) {
       console.error("Login failed: ", error);
     } finally {
@@ -45,7 +46,7 @@ const Loginform = () => {
   };
 
   useEffect(() => {
-    setButtonDisabled(!( email && password)); // Simplified condition
+    setButtonDisabled(!(email && password)); // Simplified condition
   }, [email, password]);
 
   return (
@@ -79,7 +80,9 @@ const Loginform = () => {
           value={buttonDisabled ? "No signup" : "Complete Login"}
           disabled={buttonDisabled} // Disabled attribute for button
         />
-        <Link href="/signup">Not a member? Sign up here!</Link>
+        <Link href="/Signup" className=" justify-end">
+          Not a member? Sign up here!
+        </Link>
       </form>
     </div>
   );

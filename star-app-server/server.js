@@ -13,14 +13,19 @@ app.use(express.json());
 // const subcribersRouter = require("./routes/subscribers")
 // app.use("/subscribers", subcribersRouter);
 
+const middleware = require("./middleware/middleware")
 const todoRouter = require("./routes/todos.js");
 const signupRouter = require("./routes/signup.js");
 const loginRouter = require("./routes/login.js");
+const logoutRouter = require("./routes/logout.js");
+const timetableRouter = require("./routes/timetable.js")
 
 app.use(cors());
 
 app.use("/todos", todoRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
+app.use("/logout", logoutRouter);
+app.use("/timetable", timetableRouter);
 
 app.listen(5000, () => console.log("Server Started"));
