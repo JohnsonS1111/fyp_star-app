@@ -9,7 +9,7 @@ const TodoForm = ({ todo }) => {
 
   
 
-  // Initialize form data state
+  
   const [formData, setFormData] = useState({
     title: todo.title || "", // Set title to empty string if undefined
     description: todo.description || "", // Set description to empty string if undefined
@@ -19,7 +19,7 @@ const TodoForm = ({ todo }) => {
     category: todo.category || "Project", // Set category to "Project" if undefined
   });
 
-  // Handle form field changes
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -28,7 +28,6 @@ const TodoForm = ({ todo }) => {
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -47,10 +46,10 @@ const TodoForm = ({ todo }) => {
         throw new Error(EDITMODE ? "Failed to update task." : "Failed to create task.");
       }
 
-      router.push("/TodosPage"); // Navigate to home page after successful submission
+      router.push("/TodosPage"); 
     } catch (error) {
       console.error("Error:", error);
-      // Handle error (e.g., display error message to user)
+      
     }
   };
 

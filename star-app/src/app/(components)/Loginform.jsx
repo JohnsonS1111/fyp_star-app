@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Corrected import
+import { useRouter } from "next/navigation"; 
 import React, { useEffect, useState } from "react";
 
 const Loginform = () => {
@@ -13,7 +13,7 @@ const Loginform = () => {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault();
     try {
       setLoading(true);
       const res = await fetch("http://localhost:5000/login/", {
@@ -36,7 +36,7 @@ const Loginform = () => {
       setEmail("");
       setPassword("");
 
-      // Redirect user to profile page
+      
       router.push("/TodosPage/new");
     } catch (error) {
       console.error("Login failed: ", error);
@@ -46,7 +46,7 @@ const Loginform = () => {
   };
 
   useEffect(() => {
-    setButtonDisabled(!(email && password)); // Simplified condition
+    setButtonDisabled(!(email && password));
   }, [email, password]);
 
   return (
@@ -78,7 +78,7 @@ const Loginform = () => {
           type="submit"
           className="btn"
           value={buttonDisabled ? "No signup" : "Complete Login"}
-          disabled={buttonDisabled} // Disabled attribute for button
+          disabled={buttonDisabled} 
         />
         <Link href="/Signup" className=" justify-end">
           Not a member? Sign up here!
