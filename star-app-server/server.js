@@ -20,8 +20,10 @@ const loginRouter = require("./routes/login.js");
 const logoutRouter = require("./routes/logout.js");
 const timetableRouter = require("./routes/timetable.js")
 
-app.use(cors());
-
+app.use(cors({
+    origin: "http://localhost:3000",
+    credentials: true
+  }));
 app.use("/todos", todoRouter);
 app.use("/signup", signupRouter);
 app.use("/login", loginRouter);
