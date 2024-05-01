@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Todo = require("../models/Todo");
 const connectToMongoDB = require("../dbConfig/dbConfig");
+const middleware = require("../middleware/middleware")
 
 // Connect to MongoDB when the server starts
 connectToMongoDB();
@@ -12,7 +13,8 @@ router.use(express.json());
 // Create a new task
 router.post("/", async (req, res) => {
   try {
-    const formData = req.body
+
+    const formData = req.body;
     const newTodo = await Todo.create(formData);
     console.log("Task Created:", newTodo);
     return res.status(201).json({ message: "Task Created" });
@@ -61,9 +63,9 @@ router.delete("/:id", async (req, res) => {
 });
 
 // Update a task by ID
-router.put("/:id", async (req, res) => {
+router.put("/:id",  async (req, res) => {
   const { id } = req.params;
-  const formData  = req.body;
+  const formData = req.body;
   try {
     const updatedTask = await Todo.findByIdAndUpdate(id, formData, {
       new: true,

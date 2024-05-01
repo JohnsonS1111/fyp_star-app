@@ -7,6 +7,8 @@ const TodoForm = ({ todo }) => {
   const EDITMODE = todo._id === "new" ? false : true;
   const router = useRouter();
 
+  
+
   // Initialize form data state
   const [formData, setFormData] = useState({
     title: todo.title || "", // Set title to empty string if undefined
@@ -45,7 +47,7 @@ const TodoForm = ({ todo }) => {
         throw new Error(EDITMODE ? "Failed to update task." : "Failed to create task.");
       }
 
-      router.push("/"); // Navigate to home page after successful submission
+      router.push("/TodosPage"); // Navigate to home page after successful submission
     } catch (error) {
       console.error("Error:", error);
       // Handle error (e.g., display error message to user)

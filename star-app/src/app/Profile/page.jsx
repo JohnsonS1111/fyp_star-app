@@ -1,12 +1,14 @@
+"use client";
+import Link from "next/link";
 import React from "react";
+import { useRouter } from "next/navigation";
+import UserProfile from "../(components)/UserProfile";
 
 const Profile = () => {
+  
   return (
-    <div> 
-      <h2>Profile</h2>
-      <p>js@gmail.com</p>
-      <p>Johnson S</p>
-      <p>20</p>
+    <div className="flex flex-col">
+     <UserProfile/>
     </div>
   );
 };
