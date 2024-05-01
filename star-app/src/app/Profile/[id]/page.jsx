@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserProfile = async ({ params }) => {
+const AccountProfile = async ({ params }) => {
   return (
     <div>
       <h2>Profile</h2>
@@ -9,4 +9,4 @@ const UserProfile = async ({ params }) => {
   );
 };
 
-export default UserProfile;
+export default AccountProfile;

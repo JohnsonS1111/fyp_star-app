@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation"; // Corrected import
+import { useRouter } from "next/navigation"; 
 import React, { useEffect, useState } from "react";
 
 const SignupForm = () => {
@@ -18,7 +18,7 @@ const SignupForm = () => {
     console.log(email);
     console.log(password);
 
-    e.preventDefault(); // Prevent default form submission
+    e.preventDefault(); 
     try {
       setLoading(true);
       const resT = await fetch("http://localhost:5000/signup/checkUser", {
@@ -59,7 +59,7 @@ const SignupForm = () => {
   };
 
   useEffect(() => {
-    setButtonDisabled(!(username && email && password)); // Simplified condition
+    setButtonDisabled(!(username && email && password));
   }, [username, email, password]);
 
   return (
@@ -101,7 +101,7 @@ const SignupForm = () => {
           value={buttonDisabled ? "No signup" : "Complete Signup"}
           disabled={buttonDisabled} // Disabled attribute for button
         />
-        <Link href="/login">Already signed up? Log in here</Link>
+        <Link href="/Login">Already signed up? Log in here</Link>
       </form>
     </div>
   );

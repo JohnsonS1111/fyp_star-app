@@ -8,6 +8,7 @@ import { faPenRuler, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 const TodoCard = ({ todo }) => {
+  
   const formatTime = (timestamp) => {
     const options = {
       year: "numeric",
