@@ -13,7 +13,6 @@ const UserProfile = () => {
       router.push("/Login");
     } catch (error) {
       console.error("Logout failed: ", error);
-      // Handle error here (e.g., display error message to the user)
     }
   };
 

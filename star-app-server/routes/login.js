@@ -42,7 +42,7 @@ router.post("/", async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    // Send response with token and user object
+  
     res.status(200).json({ token, user });
   } catch (error) {
     console.error("Login failed:", error);

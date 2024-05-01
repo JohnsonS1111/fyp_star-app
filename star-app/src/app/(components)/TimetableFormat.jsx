@@ -22,7 +22,6 @@ const TimetableFormat = () => {
   };
 
   const handleUpload = async () => {
-    e.preventDefault()
     const formData = new FormData();
     formData.append("file", file);
 
@@ -30,9 +29,6 @@ const TimetableFormat = () => {
       const res = await fetch("http://localhost:5000/timetable/upload", {
         method: "POST",
         body: formData,
-        headers: {
-          Authorization: `Bearer ${token}` // Pass token with the request
-        }
       });
       if (!res.ok) {
         alert("Upload failed");

@@ -11,6 +11,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
+import logo from "../logo/STAR_Logo-removebg-preview (1) (2).png";
+
 const Nav = () => {
   const router = useRouter();
   const logout = async () => {
@@ -38,12 +40,15 @@ const Nav = () => {
         <Link href="/TodosPage/new" title="Create new task">
           <FontAwesomeIcon icon={faPlusSquare} className="icon" />
         </Link>
-        <Link href="/Profile" title="Profile">
+        {/* <Link href="/Profile" title="Profile">
           <FontAwesomeIcon icon={faUser} className="icon" />
-        </Link>
+        </Link> */}
         <Link href="/Timetable" title="Timetable upload">
           <FontAwesomeIcon icon={faUpload} className="icon" />
         </Link>
+      </div>
+      <div>
+        <h2>STAR</h2>
       </div>
       <div>
         <Link href="/Login" title="Login">

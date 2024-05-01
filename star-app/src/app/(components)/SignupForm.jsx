@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const SignupForm = () => {
@@ -18,7 +18,7 @@ const SignupForm = () => {
     console.log(email);
     console.log(password);
 
-    e.preventDefault(); 
+    e.preventDefault();
     try {
       setLoading(true);
       const resT = await fetch("http://localhost:5000/signup/checkUser", {
@@ -50,7 +50,7 @@ const SignupForm = () => {
       setPassword("");
 
       router.refresh();
-      router.push("/login"); // Use replace instead of push to prevent stacking routes
+      router.push("/Login");
     } catch (error) {
       console.error("Signup failed: ", error);
     } finally {
@@ -99,7 +99,7 @@ const SignupForm = () => {
           type="submit"
           className="btn"
           value={buttonDisabled ? "No signup" : "Complete Signup"}
-          disabled={buttonDisabled} // Disabled attribute for button
+          disabled={buttonDisabled}
         />
         <Link href="/Login">Already signed up? Log in here</Link>
       </form>

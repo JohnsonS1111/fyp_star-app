@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccountProfile = async ({ params }) => {
+const AccountProfileauth = async ({ params }) => {
   return (
     <div>
       <h2>Profile</h2>
